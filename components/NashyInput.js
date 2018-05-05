@@ -14,7 +14,6 @@ export default styled.input `
 
     transition: 0.3s width;
     height: 3em;
-    width: 2em;
 
     color: white;
 
@@ -24,10 +23,5 @@ export default styled.input `
 
     :hover {
         opacity: 1;
-    }
-
-    :focus,
-    :active {
-        width: 80vw;
     }
 `

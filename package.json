@@ -1,0 +1,46 @@
+{
+    "name": "nashy",
+    "version": "1.0.0",
+    "description": "A game of trust",
+    "main": "",
+    "scripts": {
+        "dev": "NODE_ENV=development node index.js",
+        "build": "next build",
+        "start": "node index.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/goonism/nashy.git"
+    },
+    "keywords": [
+        "game"
+    ],
+    "author": "GSM",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/goonism/nashy/issues"
+    },
+    "homepage": "https://github.com/goonism/nashy#readme",
+    "dependencies": {
+        "connect-mongo": "^2.0.1",
+        "dotenv": "^5.0.1",
+        "express-session": "^1.15.6",
+        "mongodb": "^3.0.7",
+        "nedb": "^1.8.0",
+        "next": "^6.0.0",
+        "next-auth": "^1.8.1",
+        "nodemailer": "^4.6.4",
+        "nodemailer-direct-transport": "^3.3.2",
+        "nodemailer-smtp-transport": "^2.7.4",
+        "passport-facebook": "^2.1.1",
+        "passport-google-oauth": "^1.0.0",
+        "passport-twitter": "^1.0.4",
+        "react": "^16.3.2",
+        "react-dom": "^16.3.2",
+        "styled-components": "^3.2.6"
+    },
+    "now": {
+        "name": "nashy",
+        "alias": "nashy.now.sh"
+    }
+}

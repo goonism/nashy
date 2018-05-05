@@ -77,7 +77,7 @@ export default class LevelPage extends Component {
                 </NashyNum>
             </NashyNumContainer>
             <NashyInputListContainer className="Mauve">
-                {this.state.listOfRandoms.map((n, i) => <NashyInputContainer>
+                {this.state.listOfRandoms.map((n, i) => <NashyInputContainer key={i}>
                     <span>Key#{i}:</span> <NashyInput key={i} number={n}/>
                 </NashyInputContainer>)}
             </NashyInputListContainer>

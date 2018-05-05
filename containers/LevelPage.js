@@ -45,12 +45,15 @@ const NashyCheckingContainer = styled.div `
 const NashyInputContainer = styled.div `
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: flex-end;
     align-items: center;
     color: white;
     margin: 1em;
     span {
         margin-right: 1em;
+    }
+    input {
+        width: 30em;
     }
 `
 
@@ -78,7 +81,7 @@ export default class LevelPage extends Component {
             </NashyNumContainer>
             <NashyInputListContainer className="Mauve">
                 {this.state.listOfRandoms.map((n, i) => <NashyInputContainer key={i}>
-                    <span>Key#{i}:</span> <NashyInput key={i} number={n}/>
+                    <span>Key {i}:</span> <NashyInput key={i} number={n}/>
                 </NashyInputContainer>)}
             </NashyInputListContainer>
             <NashyCheckingContainer className="Royal">

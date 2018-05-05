@@ -4,6 +4,7 @@ import Router from 'next/router'
 import Link from 'next/link'
 import {NextAuth} from 'next-auth/client'
 
+import LandingPage from '../containers/LandingPage';
 import LevelPage from '../containers/LevelPage';
 
 export default class extends React.Component {
@@ -28,15 +29,29 @@ export default class extends React.Component {
     }
 
     render() {
-        return (<div>
-            <Head>
-                <meta name="viewport" content="width=device-width, initial-scale=1"/>
-            </Head>
+        if (this.props.session.user) {
+          return (
             <div>
-                <LevelPage/>
-                <SignInMessage {...this.props}/>
-            </div>
-        </div>)
+              <Head>
+                  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+              </Head>
+              <div>
+                  <LevelPage/>
+                  <SignInMessage {...this.props}/>
+              </div>
+          </div>
+          )
+        } else {
+          return (<div>
+              <Head>
+                  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+              </Head>
+              <div>
+                  <LandingPage/>
+                  <SignInMessage {...this.props}/>
+              </div>
+          </div>)
+        }
     }
 }
 

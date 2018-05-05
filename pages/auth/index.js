@@ -47,55 +47,28 @@ export default class extends React.Component {
   render() {
     if (this.props.session.user) {
       return (
-        <div className="container">
+        <div>
           <Head>
             <meta name="viewport" content="width=device-width, initial-scale=1"/>
-            <script src="https://cdn.polyfill.io/v2/polyfill.min.js"/>
-            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossOrigin="anonymous"/>
           </Head>
-          <div className="text-center">
-            <h1 className="display-4 mt-3">Nashy Signin</h1>
-            <p className="lead mt-3 mb-1">You are signed in as <span className="font-weight-bold">{this.props.session.user.email}</span>.</p>
-          </div>
-          <div className="row">
-            <div className="col-sm-5 mr-auto ml-auto">
-              <LinkAccounts
-                session={this.props.session}
-                linkedAccounts={this.props.linkedAccounts}
-                />
-            </div>
-          </div>
-          <p className="text-center">
+          <h1>Nashy Signin</h1>
+          <p>You are signed in as <span>{this.props.session.user.email}</span>.</p>
+          <LinkAccounts
+            session={this.props.session}
+            linkedAccounts={this.props.linkedAccounts}
+            />
+          <p>
             <Link href="/"><a>Home</a></Link>
           </p>
         </div>
       )
     } else {
       return (
-        <div className="container">
+        <div>
           <Head>
             <meta name="viewport" content="width=device-width, initial-scale=1"/>
-            <script src="https://cdn.polyfill.io/v2/polyfill.min.js"/>
-            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossOrigin="anonymous"/>
           </Head>
-          <div className="text-center">
-            <h1 className="display-4 mt-3 mb-3">NextAuth Example</h1>
-          </div>
-          <div className="row">
-            <div className="col-sm-6 mr-auto ml-auto">
-              <div className="card mt-3 mb-3">
-                <h4 className="card-header">Sign In</h4>
-                <div className="card-body pb-0">
-
-                  <SignInButtons providers={this.props.providers}/>
-
-                </div>
-              </div>
-            </div>
-          </div>
-          <p className="text-center">
-            <Link href="/"><a>Home</a></Link>
-          </p>
+          <SignInButtons providers={this.props.providers}/>
         </div>
       )
     }
@@ -105,9 +78,9 @@ export default class extends React.Component {
 export class LinkAccounts extends React.Component {
   render() {
     return (
-      <div className="card mt-3 mb-3">
-        <h4 className="card-header">Link Accounts</h4>
-        <div className="card-body pb-0">
+      <div>
+        <h4>Link Accounts</h4>
+        <div>
           {
             Object.keys(this.props.linkedAccounts).map((provider, i) => {
               return <LinkAccount key={i} provider={provider} session={this.props.session} linked={this.props.linkedAccounts[provider]}/>
@@ -126,7 +99,7 @@ export class LinkAccount extends React.Component {
         <form method="post" action={`/auth/oauth/${this.props.provider.toLowerCase()}/unlink`}>
           <input name="_csrf" type="hidden" value={this.props.session.csrfToken}/>
           <p>
-            <button className="btn btn-block btn-outline-danger" type="submit">
+            <button type="submit">
               Unlink from {this.props.provider}
             </button>
           </p>
@@ -135,7 +108,7 @@ export class LinkAccount extends React.Component {
     } else {
       return (
         <p>
-          <a className="btn btn-block btn-outline-primary" href={`/auth/oauth/${this.props.provider.toLowerCase()}`}>
+          <a href={`/auth/oauth/${this.props.provider.toLowerCase()}`}>
             Link with {this.props.provider}
           </a>
         </p>
@@ -152,7 +125,7 @@ export class SignInButtons extends React.Component {
           Object.keys(this.props.providers).map((provider, i) => {
             return (
               <p key={i}>
-                <a className="btn btn-block btn-outline-secondary" href={this.props.providers[provider].signin}>
+                <a href={this.props.providers[provider].signin}>
                   Sign in with {provider}
                 </a>
               </p>

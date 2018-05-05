@@ -25,7 +25,6 @@ export default class extends React.Component {
       <React.Fragment>
         <Head>
           <meta name="viewport" content="width=device-width, initial-scale=1"/>
-          <script src="https://cdn.polyfill.io/v2/polyfill.min.js"/>
         </Head>
         <style jsx global>{`
           body{
@@ -65,8 +64,8 @@ export default class extends React.Component {
             100% {transform: rotate(360deg); }
           }
         `}</style>
-        <a href="/" className="circle-loader">
-          <svg className="circle" width="60" height="60" version="1.1" xmlns="http://www.w3.org/2000/svg">
+        <a href="/">
+          <svg width="60" height="60" version="1.1" xmlns="http://www.w3.org/2000/svg">
             <circle cx="30" cy="30" r="15"/>
           </svg>
         </a>

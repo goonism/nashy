@@ -24,4 +24,4 @@ export default styled.input `
     :hover {
         opacity: 1;
     }
-`
+`;

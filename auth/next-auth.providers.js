@@ -21,10 +21,10 @@
  **/
 
 // Load environment variables from a .env file if one exists
-require('dotenv').load()
+require('dotenv').load();
 
 module.exports = () => {
-  let providers = []
+  let providers = [];
 
   if (process.env.FACEBOOK_ID && process.env.FACEBOOK_SECRET) {
     providers.push({
@@ -44,9 +44,9 @@ module.exports = () => {
           id: profile.id,
           name: profile.displayName,
           email: profile._json.email
-        }
+        };
       }
-    })
+    });
   }
 
   if (process.env.GOOGLE_ID && process.env.GOOGLE_SECRET) {
@@ -66,9 +66,9 @@ module.exports = () => {
           id: profile.id,
           name: profile.displayName,
           email: profile.emails[0].value
-        }
+        };
       }
-    })
+    });
   }
 
   /**
@@ -99,10 +99,10 @@ module.exports = () => {
           id: profile.id,
           name: profile.displayName,
           email: (profile.emails && profile.emails[0].value) ? profile.emails[0].value : ''
-        }
+        };
       }
-    })
+    });
   }
 
-  return providers
-}
+  return providers;
+};

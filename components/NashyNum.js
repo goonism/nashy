@@ -17,4 +17,4 @@ export default styled.div `
     h2 {
         font-size: 0.9em;
     }
-`
+`;

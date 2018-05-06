@@ -7,50 +7,72 @@ import {NextAuth} from 'next-auth/client'
 import LandingPage from '../containers/LandingPage';
 import LevelPage from '../containers/LevelPage';
 
+function getUser(userdb, {email}) {
+    return userdb.model.findOne({email}).lean();
+}
+
+function updateLevelNumber(userdb, {email, levelNumber}) {
+    const update = {
+        levelNumber: levelNumber
+            ? levelNumber + 1
+            : 1
+    };
+
+    const options = {
+        new: true
+    };
+
+    return userdb.model.findOneAndUpdate({email}, update, options).lean();
+}
+
 export default class extends React.Component {
     static async getInitialProps({req}) {
-        return {
-            session: await NextAuth.init({req})
+        const session = await NextAuth.init({req});
+        if (session.user) {
+            const user = await getUser(req.userdb, session.user);
+            const updatedUser = await updateLevelNumber(req.userdb, user);
+            session.levelNumber = updatedUser.levelNumber;
         }
+        return {
+            session
+        };
     }
 
     constructor(props) {
-        super(props)
-        this.handleSignOutSubmit = this.handleSignOutSubmit.bind(this)
+        super(props);
     }
 
-    handleSignOutSubmit(event) {
+    handleSignOutSubmit = async (event) => {
         event.preventDefault()
-        NextAuth.signout().then(() => {
+        await NextAuth.signout();
+        try {
             Router.push('/auth/callback')
-        }).catch(err => {
+        } catch (e) {
             Router.push('/auth/error?action=signout')
-        })
+        }
     }
 
     render() {
         if (this.props.session.user) {
-          return (
-            <div>
-              <Head>
-                  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-              </Head>
-              <div>
-                  <LevelPage/>
-                  <SignInMessage {...this.props}/>
-              </div>
-          </div>
-          )
+            return (<div>
+                <Head>
+                    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+                </Head>
+                <div>
+                    <LevelPage {...this.props}/>
+                    <SignInMessage {...this.props}/>
+                </div>
+            </div>)
         } else {
-          return (<div>
-              <Head>
-                  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-              </Head>
-              <div>
-                  <LandingPage/>
-                  <SignInMessage {...this.props}/>
-              </div>
-          </div>)
+            return (<div>
+                <Head>
+                    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+                </Head>
+                <div>
+                    <LandingPage />
+                    <SignInMessage {...this.props}/>
+                </div>
+            </div>)
         }
     }
 }

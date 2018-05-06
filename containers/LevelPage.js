@@ -13,7 +13,7 @@ const NashyNumContainer = styled.div `
     justify-content: center;
     align-items: center;
     color: white;
-`
+`;
 
 const NashyInputListContainer = styled.div `
     width: 100vw;
@@ -29,7 +29,7 @@ const NashyInputListContainer = styled.div `
     flex-wrap: wrap;
 
     transition: all 3s;
-`
+`;
 
 const NashyCheckingContainer = styled.div `
     width: 100vw;
@@ -39,7 +39,7 @@ const NashyCheckingContainer = styled.div `
     justify-content: space-around;
     align-items: center;
     color: white;
-`
+`;
 
 
 const NashyInputContainer = styled.div `
@@ -55,7 +55,7 @@ const NashyInputContainer = styled.div `
     input {
         width: 30em;
     }
-`
+`;
 
 export default class LevelPage extends Component {
     constructor(props) {
@@ -77,6 +77,7 @@ export default class LevelPage extends Component {
                 <NashyNum>
                     <h1>{this.state.playerNumber}</h1>
                     <h2>is your key</h2>
+                    <h3>{this.props.session.levelNumber}</h3> 
                 </NashyNum>
             </NashyNumContainer>
             <NashyInputListContainer className="Mauve">

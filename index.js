@@ -9,30 +9,57 @@
  * authentication options are provided.
  **/
 
-// Include Next.js, Next Auth and a Next Auth config
-const next = require('next')
-const nextAuth = require('next-auth')
-const nextAuthConfig = require('./next-auth.config')
-
 // Load environment variables from .env
 require('dotenv').load()
 
+process.env.NODE_ENV = process.env.NODE_ENV || 'production'
+process.env.PORT = process.env.PORT || 80
+
+const Promise = require('bluebird');
+
+// Include Next.js, Next Auth and a Next Auth config
+const express = require('express')
+const next = require('next')
+const nextAuth = require('next-auth')
+const nextAuthConfig = require('./auth/next-auth.config')
+
+const mongoose = require('mongoose');
+mongoose.Promise = Promise;
+const userModel = require('./models/user');
+
+mongoose.connect(process.env.MONGO_URI);
+const userdb = new(userModel)(mongoose);
+
+const dev = process.env.NODE_ENV !== 'production'
+
 // Initialize Next.js
-const nextApp = next({
-    dir: '.',
-    dev: (process.env.NODE_ENV === 'development')
-})
+const app = next({dir: '.', dev})
+
+const handle = app.getRequestHandler()
 
 // Add next-auth to next app
-nextApp.prepare().then(() => {
-    // Load configuration and return config object
-    return nextAuthConfig()
-}).then(nextAuthOptions => {
+app.prepare().then(() => nextAuthConfig()).then((options) => {
     // Pass Next.js App instance and NextAuth options to NextAuth
-    return nextAuth(nextApp, nextAuthOptions)
-}).then((response) => {
-    console.log(`Ready on http://localhost:${process.env.PORT || 3000}`)
+    return nextAuth(app, options);
+}).then(({express, expressApp}) => {
+
+    // Express raw middleware and what not here:
+
+    expressApp.all('*', (req, res) => {
+        req.userdb = userdb;
+
+        return handle(req, res)
+    });
+
+    expressApp.listen(process.env.PORT, err => {
+        if (err) {
+            throw err
+        }
+
+        console.log(`> Ready on http://localhost:${process.env.PORT}[${process.env.NODE_ENV}]`)
+    });
+
 }).catch(err => {
     console.log('An error occurred, unable to start the server')
     console.log(err)
-})
+});
